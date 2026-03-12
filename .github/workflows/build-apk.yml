@@ -12,17 +12,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
+          cache: 'yarn' # GitHub cashar nu dina Yarn-paket
 
       - name: 📦 Install EAS CLI
-        # We install it manually to avoid the yarn error in the expo-action
-        run: npm install -g eas-cli
+        # Vi använder yarn för att installera verktyget globalt
+        run: yarn global add eas-cli
 
       - name: 📦 Install dependencies
-        run: npm install
+        # Detta installerar alla paket i din package.json med Yarn
+        run: yarn install
 
       - name: 🚀 Build APK
-        # We call EAS directly instead of using the wrapper action
         run: eas build --platform android --profile preview --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
